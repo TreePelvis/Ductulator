@@ -167,8 +167,10 @@ public class LinkedList {
       } 
        
       public String getTextualData() {
-         return Integer.toString(data[0]) + " " + Integer.toString(data[1]);
-      } 
+         return Integer.toString(data[0]) +
+                 "                      " + Integer.toString(data[1]);
+      }
+
       public void setData(int dataValue) {
          data[1] = dataValue;
       }

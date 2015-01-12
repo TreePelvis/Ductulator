@@ -43,6 +43,11 @@ public class DuctulatorController {
             view.displayDuctTypeInfo("Type 2");
             view.displayTextArea(model.getTransitionTotal());
          }
+         else if(selection == "Square to Round") {
+            model.setSelectedDuctType("Square to Round");
+            view.displayDuctTypeInfo("Type 3");
+            view.displayTextArea(model.getSquareToRoundTotal());
+         }
          else if(selection == "Rect. Elbow") {
             model.setSelectedDuctType("Rect. Elbow");
             view.displayDuctTypeInfo("Type 1");
@@ -73,6 +78,10 @@ public class DuctulatorController {
          else if(selection == "Transition") {
             model.addToTransitionList(ductSize, total);
             view.displayTextArea(model.getTransitionTotal());
+         }
+         else if(selection == "Square to Round") {
+            model.addToSquareToRoundList(ductSize, total);
+            view.displayTextArea(model.getSquareToRoundTotal());
          }
          else if(selection == "Rect. Elbow") {
             model.addToRectElbowList(ductSize, total);
