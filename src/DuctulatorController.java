@@ -1,9 +1,5 @@
-import java.awt.*;       
-import java.awt.event.*;
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import net.miginfocom.layout.Grid; 
 
 /**
    DuctulatorController handles the interaction between DuctulatorModel
@@ -25,6 +21,7 @@ public class DuctulatorController {
 
       this.view.addRadioButtonListener(new RadioButtonListener());
       this.view.addButtonListener(new ButtonListener());
+      this.view.addComboBoxListener(new ComboBoxListener());
    }
    
    /*
@@ -32,31 +29,30 @@ public class DuctulatorController {
    */
    class RadioButtonListener implements ActionListener {
       public void actionPerformed(ActionEvent e) {
-         String selection = view.getSelection();
+         String selection = view.getRadioButtonSelection();
          if(selection == "Straight Duct") {
-            model.setSelectedDuctType("Straight Duct");
-            view.displayDuctTypeInfo("Type 1");
+            model.setSelectedRadioButton(selection);
+            view.displayComboBox(selection);
+            view.displayComboBoxInfo("Type 1");
             view.displayTextArea(model.getStraightDuctTotal());
          }
-         else if(selection == "Transition") {
-            model.setSelectedDuctType("Transition");
-            view.displayDuctTypeInfo("Type 2");
-            view.displayTextArea(model.getTransitionTotal());
+         else if(selection == "Transitions") {
+            model.setSelectedRadioButton("selection");
+            view.displayComboBox(selection);
+            view.displayComboBoxInfo("Type 2");
+            view.displayTextArea(model.getTransitionsTotal());
          }
-         else if(selection == "Square to Round") {
-            model.setSelectedDuctType("Square to Round");
-            view.displayDuctTypeInfo("Type 3");
-            view.displayTextArea(model.getSquareToRoundTotal());
+         else if(selection == "Elbows") {
+            model.setSelectedRadioButton(selection);
+            view.displayComboBox(selection);
+            view.displayComboBoxInfo("Type 1");
+            view.displayTextArea(model.getElbowsTotal());
          }
-         else if(selection == "Rect. Elbow") {
-            model.setSelectedDuctType("Rect. Elbow");
-            view.displayDuctTypeInfo("Type 1");
-            view.displayTextArea(model.getRectElbowTotal());
-         }
-         else if(selection == "Take Off") {
-            model.setSelectedDuctType("Take Off");
-            view.displayDuctTypeInfo("Type 1");
-            view.displayTextArea(model.getTakeOffTotal());
+         else if(selection == "Take Offs") {
+            model.setSelectedRadioButton(selection);
+            view.displayComboBox(selection);
+            view.displayComboBoxInfo("Type 1");
+            view.displayTextArea(model.getTakeOffsTotal());
          }
       }
    }   
@@ -69,28 +65,64 @@ public class DuctulatorController {
          int ductSize = view.getDuctSize();
          int total = view.getDuctTotal();
          
-         String selection = view.getSelection();
+         String selection = view.getRadioButtonSelection();
          
          if(selection == "Straight Duct") {
             model.addToStraightDuctList(ductSize, total);
             view.displayTextArea(model.getStraightDuctTotal());
          }
-         else if(selection == "Transition") {
-            model.addToTransitionList(ductSize, total);
-            view.displayTextArea(model.getTransitionTotal());
+         else if(selection == "Transitions") {
+            model.addToTransitionsList(ductSize, total);
+            view.displayTextArea(model.getTransitionsTotal());
          }
-         else if(selection == "Square to Round") {
-            model.addToSquareToRoundList(ductSize, total);
-            view.displayTextArea(model.getSquareToRoundTotal());
+         else if(selection == "Elbows") {
+            model.addToElbowsList(ductSize, total);
+            view.displayTextArea(model.getElbowsTotal());
          }
-         else if(selection == "Rect. Elbow") {
-            model.addToRectElbowList(ductSize, total);
-            view.displayTextArea(model.getRectElbowTotal());
-         }
-         else if(selection == "Take Off") {
-            model.addToTakeOffList(ductSize, total);
-            view.displayTextArea(model.getTakeOffTotal());
+         else if(selection == "Take Offs") {
+            model.addToTakeOffsList(ductSize, total);
+            view.displayTextArea(model.getTakeOffsTotal());
          }
       }
-   }  
+   }
+
+   /*
+   Private inner class that deals with button functions
+   */
+   class ComboBoxListener implements ActionListener {
+      public void actionPerformed(ActionEvent e) {
+         String selection = view.getComboBoxSelection();
+         if(selection == "Galvanized" || selection == "Steel" ||
+                 selection == "Aluminum" || selection == "Galvanneal" ||
+                 selection == "Side Take-off" ||
+                 selection == "Top Take-off") {
+            model.setSelectedComboBoxItem(selection);
+            view.displayComboBoxInfo("Type 1");
+            view.displayTextArea(model.getStraightDuctTotal());
+         }
+         else if(selection == "Rectangular" || selection == "Rect. w/ Vanes" ||
+                 selection == "Radius") {
+            model.setSelectedComboBoxItem(selection);
+            view.displayComboBoxInfo("Type 1");
+            view.displayTextArea(model.getElbowsTotal());
+         }
+         else if (selection == "Square to Square" || selection == "Square to Oval") {
+            model.setSelectedComboBoxItem(selection);
+            view.displayComboBoxInfo("Type 2");
+            view.displayTextArea(model.getTransitionsTotal());
+         }
+         else if (selection == "Square to Round") {
+            model.setSelectedComboBoxItem(selection);
+            view.displayComboBoxInfo("Type 3");
+            view.displayTextArea(model.getTransitionsTotal());
+         }
+         else if (selection == "Side Take-off" || selection == "Top Take-off") {
+            model.setSelectedComboBoxItem(selection);
+            view.displayComboBoxInfo("Type 1");
+            view.displayTextArea(model.getTakeOffsTotal());
+         }
+
+      }
+   }
+   private String[] transitionDuctTypes = {"Square to Square", "Square to Round", "Square to Oval"};
 }

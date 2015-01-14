@@ -1,21 +1,25 @@
-import java.awt.*;       
-import java.awt.event.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import net.miginfocom.layout.Grid; 
+
 import net.miginfocom.swing.MigLayout;
 
 /**
    DuctulatorView sets up the UI for this GUI
 */
 public class DuctulatorView extends JFrame {
+   private String[] straightDuctTypes = {"Galvanized", "Steel", "Aluminum", "Galvanneal"};
+   private String[] transitionDuctTypes = {"Square to Square", "Square to Round", "Square to Oval"};
+   private String[] elbowDuctTypes = {"Rectangular", "Rect. w/ Vanes", "Radius"};
+   private String[] takoOffDuctTypes = {"Side Take-off", "Top Take-off"};
+   private JComboBox straightDuctComboBox;
+   private JComboBox transitionComboBox;
+   private JComboBox elbowComboBox;
+   private JComboBox takeOffComboBox;
    private DuctulatorModel model;
    private JRadioButton straightDuct;
-   private JRadioButton transition;
-   private JRadioButton squareToRound;
-   private JRadioButton rectElbow;
-   private JRadioButton takeOff;
+   private JRadioButton transitions;
+   private JRadioButton elbows;
+   private JRadioButton takeOffs;
    private ButtonGroup buttonGroup;
    private JLabel lengthLabel1;
    private JLabel widthLabel1;
@@ -39,111 +43,153 @@ public class DuctulatorView extends JFrame {
          Sets up UI
    */
    public DuctulatorView(DuctulatorModel model) {
-   super("MigLayout Basic");
-   this.model = model;
-   
-   //Sets the layout to MigLayout
-   setLayout(new MigLayout("hidemode 3, insets 10 n n n", "10[]30[]10[]30"));
-  
-   straightDuct = new JRadioButton("Straight Duct", true);
-   transition = new JRadioButton("Transition", false);
-   squareToRound = new JRadioButton("Square to Round", false);
-   rectElbow = new JRadioButton("Rect. Elbow", false);
-   takeOff = new JRadioButton("Take Off", false);
+      super("MigLayout Basic");
+      this.model = model;
 
-   if(straightDuct.isSelected()) {
-      model.setSelectedDuctType("Straight Duct");
-   }
-   else if(transition.isSelected()) {
-      model.setSelectedDuctType("Transition");
-   }
-   else if(squareToRound.isSelected()) {
-      model.setSelectedDuctType("Square to Round");
-   }
-   else if(rectElbow.isSelected()) {
-      model.setSelectedDuctType("Rectangular Elbow");
-   }
-   else if(takeOff.isSelected()) {
-      model.setSelectedDuctType("Take Off");
-   }  
-   
-   buttonGroup = new ButtonGroup();
-   buttonGroup.add(straightDuct);
-   buttonGroup.add(transition);
-   buttonGroup.add(squareToRound);
-   buttonGroup.add(rectElbow);
-   buttonGroup.add(takeOff);
-  
-   add(straightDuct, "left");
-   add(transition, "left, cell 0 1");
-   add(squareToRound, "left, cell 0 2");
-   add(rectElbow, "left, cell 0 3");
-   add(takeOff, "left, cell 0 4");
-  
-   lengthLabel1 = new JLabel("Length:     ");
-   widthLabel1 = new JLabel("Width:     ");
-   totalLabel = new JLabel("Total:     ");
-   diameterLabel = new JLabel("Diameter:");
-   lengthTextField1 = new JTextField();
-   widthTextField1 = new JTextField();
-   totalTextField = new JTextField();
-   diameterTextField = new JTextField();
-   lengthLabel2 = new JLabel("Length:     ");
-   widthLabel2 = new JLabel("Width:     ");
-   lengthTextField2 = new JTextField();
-   widthTextField2 = new JTextField();
-   addButton = new JButton("Add");
-   
-   add(lengthLabel1, "left, cell 1 0");
-   add(lengthTextField1, "wrap, w 100");
-   add(widthLabel1, "left, cell 1 1");
-   add(widthTextField1, "wrap, w 100");
-   add(diameterLabel, "left, cell 1 2");
-   add(diameterTextField, "wrap, w 100");
-   add(lengthLabel2, "left, cell 1 2");
-   add(lengthTextField2, "wrap, w 100");
-   add(widthLabel2, "left, cell 1 3");
-   add(widthTextField2, "wrap, w 100");
-   add(totalLabel, "left, cell 1 4");
-   add(totalTextField, "wrap, w 100");
-   add(addButton, "right, cell 2 5, wrap");
+      //Sets the layout to MigLayout
+      setLayout(new MigLayout("hidemode 3, insets 10 n n n, fill", "10[]30[][127]30[]"));
 
-   diameterLabel.setVisible(false);
-   diameterTextField.setVisible(false);
-   lengthLabel2.setVisible(false);
-   lengthTextField2.setVisible(false);
-   widthLabel2.setVisible(false);
-   widthTextField2.setVisible(false);
+      straightDuct = new JRadioButton("Straight Duct", true);
+      transitions = new JRadioButton("Transitions", false);
+      elbows = new JRadioButton("Elbows", false);
+      takeOffs = new JRadioButton("Take Offs", false);
 
-   listTextArea = new JTextArea(10, 15);
-   listTextArea.setLineWrap(true);
-   listScrollPane = new JScrollPane(listTextArea);
-   listScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-   add(listScrollPane, "east, pad 10 0 0 0");
-   
-   setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-   pack();
-   setLocationRelativeTo(null);
-   setResizable(false);
+      if(straightDuct.isSelected()) {
+         model.setSelectedRadioButton("Straight Duct");
+      }
+      else if(transitions.isSelected()) {
+         model.setSelectedRadioButton("Transitions");
+      }
+      else if(elbows.isSelected()) {
+         model.setSelectedRadioButton("Elbows");
+      }
+      else if(takeOffs.isSelected()) {
+         model.setSelectedRadioButton("Take Offs");
+      }
+
+      buttonGroup = new ButtonGroup();
+      buttonGroup.add(straightDuct);
+      buttonGroup.add(transitions);
+      buttonGroup.add(elbows);
+      buttonGroup.add(takeOffs);
+
+      add(straightDuct, "left");
+      add(transitions, "left, cell 0 1");
+      add(elbows, "left, cell 0 2");
+      add(takeOffs, "left, cell 0 3");
+
+      straightDuctComboBox = new JComboBox(straightDuctTypes);
+      transitionComboBox = new JComboBox(transitionDuctTypes);
+      elbowComboBox = new JComboBox(elbowDuctTypes);
+      takeOffComboBox = new JComboBox(takoOffDuctTypes);
+
+      add(straightDuctComboBox, "left, cell 2 0, growx");
+      add(transitionComboBox, "left, cell 2 0, growx");
+      add(elbowComboBox, "left, cell 2 0, growx");
+      add(takeOffComboBox, "left, cell 2 0, growx");
+
+      transitionComboBox.setVisible(false);
+      elbowComboBox.setVisible(false);
+      takeOffComboBox.setVisible(false);
+
+      lengthLabel1 = new JLabel("Length:     ");
+      widthLabel1 = new JLabel("Width:     ");
+      totalLabel = new JLabel("Total:     ");
+      diameterLabel = new JLabel("Diameter:");
+      lengthTextField1 = new JTextField();
+      widthTextField1 = new JTextField();
+      totalTextField = new JTextField();
+      diameterTextField = new JTextField();
+      lengthLabel2 = new JLabel("Length:     ");
+      widthLabel2 = new JLabel("Width:     ");
+      lengthTextField2 = new JTextField();
+      widthTextField2 = new JTextField();
+      addButton = new JButton("Add");
+
+      add(lengthLabel1, "right, cell 1 1");
+      add(lengthTextField1, "wrap, w 100, growx");
+      add(widthLabel1, "right, cell 1 2");
+      add(widthTextField1, "wrap, w 100, growx");
+      add(diameterLabel, "right, cell 1 3");
+      add(diameterTextField, "wrap, w 100, growx");
+      add(lengthLabel2, "right, cell 1 3");
+      add(lengthTextField2, "wrap, w 100, growx");
+      add(widthLabel2, "right, cell 1 4");
+      add(widthTextField2, "wrap, w 100, growx");
+      add(totalLabel, "right, cell 1 5");
+      add(totalTextField, "wrap, w 100, growx");
+      add(addButton, "right, cell 2 7, wrap");
+
+      diameterLabel.setVisible(false);
+      diameterTextField.setVisible(false);
+      lengthLabel2.setVisible(false);
+      lengthTextField2.setVisible(false);
+      widthLabel2.setVisible(false);
+      widthTextField2.setVisible(false);
+
+      listTextArea = new JTextArea(10, 15);
+      listTextArea.setLineWrap(true);
+      listScrollPane = new JScrollPane(listTextArea);
+      listScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+      add(listScrollPane, "east, pad 10 0 0 0");
+
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      pack();
+      setLocationRelativeTo(null);
+//      setResizable(false);
    }
    
    //Add action listeners for each of the radio buttons
    public void addRadioButtonListener(ActionListener radioButtonListener) {
       straightDuct.addActionListener(radioButtonListener);
-      transition.addActionListener(radioButtonListener);
-      squareToRound.addActionListener(radioButtonListener);
-      rectElbow.addActionListener(radioButtonListener);
-      takeOff.addActionListener(radioButtonListener);
+      transitions.addActionListener(radioButtonListener);
+      elbows.addActionListener(radioButtonListener);
+      takeOffs.addActionListener(radioButtonListener);
    }
-   
+
+   //Add action listeners for the combo boxes
+   public void addComboBoxListener(ActionListener comboBoxListener) {
+      straightDuctComboBox.addActionListener(comboBoxListener);
+      transitionComboBox.addActionListener(comboBoxListener);
+      elbowComboBox.addActionListener(comboBoxListener);
+      takeOffComboBox.addActionListener(comboBoxListener);
+   }
+
    //Add action listeners for each of the buttons
    public void addButtonListener(ActionListener buttonListener) {
       addButton.addActionListener(buttonListener);
    }
-   
+
+   public void displayComboBox(String radioButtonSelection) {
+      if(radioButtonSelection == "Straight Duct") {
+         straightDuctComboBox.setVisible(true);
+         transitionComboBox.setVisible(false);
+         elbowComboBox.setVisible(false);
+         takeOffComboBox.setVisible(false);
+      }
+      else if(radioButtonSelection == "Transitions") {
+         straightDuctComboBox.setVisible(false);
+         transitionComboBox.setVisible(true);
+         elbowComboBox.setVisible(false);
+         takeOffComboBox.setVisible(false);
+      }
+      else if(radioButtonSelection == "Elbows") {
+         straightDuctComboBox.setVisible(false);
+         transitionComboBox.setVisible(false);
+         elbowComboBox.setVisible(true);
+         takeOffComboBox.setVisible(false);
+      }
+      else if(radioButtonSelection == "Take Offs") {
+         straightDuctComboBox.setVisible(false);
+         transitionComboBox.setVisible(false);
+         elbowComboBox.setVisible(false);
+         takeOffComboBox.setVisible(true);
+      }
+   }
+
    //Displays the correct UI for the specific type of duct
-   public void displayDuctTypeInfo(String type) {
-      if(type == "Type 1") {
+   public void displayComboBoxInfo(String comboBox) {
+      if(comboBox == "Type 1") {
          lengthLabel2.setVisible(false);
          lengthTextField2.setVisible(false);
          widthLabel2.setVisible(false);
@@ -151,7 +197,7 @@ public class DuctulatorView extends JFrame {
          diameterLabel.setVisible(false);
          diameterTextField.setVisible(false);
       }
-      else if(type == "Type 2") {
+      else if(comboBox == "Type 2") {
          lengthLabel2.setVisible(true);
          lengthTextField2.setVisible(true);
          widthLabel2.setVisible(true);
@@ -159,7 +205,7 @@ public class DuctulatorView extends JFrame {
          diameterLabel.setVisible(false);
          diameterTextField.setVisible(false);
       }
-      else if(type == "Type 3") {
+      else if(comboBox == "Type 3") {
          lengthLabel2.setVisible(false);
          lengthTextField2.setVisible(false);
          widthLabel2.setVisible(false);
@@ -170,24 +216,45 @@ public class DuctulatorView extends JFrame {
    }
    
    //Gets the radio button that's currently selected and returns the text from it
-   public String getSelection() {
+   public String getRadioButtonSelection() {
       if(straightDuct.isSelected()) 
          return straightDuct.getText();
 
-      else if(transition.isSelected()) 
-         return transition.getText();
+      else if(transitions.isSelected())
+         return transitions.getText();
 
-      else if(squareToRound.isSelected())
-         return squareToRound.getText();
-
-      else if(rectElbow.isSelected())
-         return rectElbow.getText();
+      else if(elbows.isSelected())
+         return elbows.getText();
          
-      else if(takeOff.isSelected())
-         return takeOff.getText();
+      else if(takeOffs.isSelected())
+         return takeOffs.getText();
          
       //This return statement does nothing and is only needed to complete the method. 
       //A radio button will always be selected   
+      return null;
+   }
+
+   //Gets the combo box item that's currently selected and returns the text from it
+   public String getComboBoxSelection() {
+      String selection;
+      if(straightDuct.isSelected()) {
+         selection = (String) straightDuctComboBox.getSelectedItem();
+         return selection;
+      }
+      else if(transitions.isSelected()) {
+         selection = (String) transitionComboBox.getSelectedItem();
+         return selection;
+      }
+      else if(elbows.isSelected()) {
+         selection = (String) elbowComboBox.getSelectedItem();
+         return selection;
+      }
+      else if(takeOffs.isSelected()) {
+         selection = (String) takeOffComboBox.getSelectedItem();
+         return selection;
+      }
+      //This return statement does nothing and is only needed to complete the method.
+      //A radio button will always be selected
       return null;
    }
    
