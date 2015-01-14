@@ -127,7 +127,7 @@ public class DuctulatorView extends JFrame {
       widthLabel2.setVisible(false);
       widthTextField2.setVisible(false);
 
-      listTextArea = new JTextArea(10, 15);
+      listTextArea = new JTextArea(13, 13);
       listTextArea.setLineWrap(true);
       listScrollPane = new JScrollPane(listTextArea);
       listScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -160,6 +160,7 @@ public class DuctulatorView extends JFrame {
       addButton.addActionListener(buttonListener);
    }
 
+   //Displays the correct combo box for the selected radio button
    public void displayComboBox(String radioButtonSelection) {
       if(radioButtonSelection == "Straight Duct") {
          straightDuctComboBox.setVisible(true);

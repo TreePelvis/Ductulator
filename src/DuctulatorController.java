@@ -18,7 +18,6 @@ public class DuctulatorController {
    public DuctulatorController(DuctulatorModel model, DuctulatorView view) {
       this.model = model;
       this.view = view;
-
       this.view.addRadioButtonListener(new RadioButtonListener());
       this.view.addButtonListener(new ButtonListener());
       this.view.addComboBoxListener(new ComboBoxListener());
@@ -87,7 +86,7 @@ public class DuctulatorController {
    }
 
    /*
-   Private inner class that deals with button functions
+   Private inner class that deals with combo box functions
    */
    class ComboBoxListener implements ActionListener {
       public void actionPerformed(ActionEvent e) {
@@ -121,8 +120,6 @@ public class DuctulatorController {
             view.displayComboBoxInfo("Type 1");
             view.displayTextArea(model.getTakeOffsTotal());
          }
-
       }
    }
-   private String[] transitionDuctTypes = {"Square to Square", "Square to Round", "Square to Oval"};
 }
