@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 import net.miginfocom.swing.MigLayout;
@@ -7,7 +8,9 @@ import net.miginfocom.swing.MigLayout;
    DuctulatorView sets up the UI for this GUI
 */
 public class DuctulatorView extends JFrame {
-   private String[] straightDuctTypes = {"Galvanized", "Steel", "Aluminum", "Galvanneal"};
+   private String[] ductMaterial = {"Galvanized", "Steel", "Aluminum", "Galvanneal", "Welded Grease"};
+   private JComboBox ductMaterialComboBox;
+   private String[] straightDuctTypes = {"Square", "Round", "Oval"};
    private String[] transitionDuctTypes = {"Square to Square", "Square to Round", "Square to Oval"};
    private String[] elbowDuctTypes = {"Rectangular", "Rect. w/ Vanes", "Radius"};
    private String[] takoOffDuctTypes = {"Side Take-off", "Top Take-off"};
@@ -49,6 +52,9 @@ public class DuctulatorView extends JFrame {
       //Sets the layout to MigLayout
       setLayout(new MigLayout("hidemode 3, insets 10 n n n, fill", "10[]30[][127]30[]"));
 
+      ductMaterialComboBox = new JComboBox(ductMaterial);
+      add(ductMaterialComboBox, "left, growx, wrap");
+
       straightDuct = new JRadioButton("Straight Duct", true);
       transitions = new JRadioButton("Transitions", false);
       elbows = new JRadioButton("Elbows", false);
@@ -73,10 +79,10 @@ public class DuctulatorView extends JFrame {
       buttonGroup.add(elbows);
       buttonGroup.add(takeOffs);
 
-      add(straightDuct, "left");
-      add(transitions, "left, cell 0 1");
-      add(elbows, "left, cell 0 2");
-      add(takeOffs, "left, cell 0 3");
+      add(straightDuct, "left, cell 0 1");
+      add(transitions, "left, cell 0 2");
+      add(elbows, "left, cell 0 3");
+      add(takeOffs, "left, cell 0 4");
 
       straightDuctComboBox = new JComboBox(straightDuctTypes);
       transitionComboBox = new JComboBox(transitionDuctTypes);
@@ -132,6 +138,9 @@ public class DuctulatorView extends JFrame {
       listScrollPane = new JScrollPane(listTextArea);
       listScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
       add(listScrollPane, "east, pad 10 0 0 0");
+      //Font font = new Font("Verdana", Font.BOLD, 12);
+      //listTextArea.setFont(font);
+      listTextArea.setText("Galvanized\nDuct Size          Total");
 
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       pack();
@@ -153,6 +162,7 @@ public class DuctulatorView extends JFrame {
       transitionComboBox.addActionListener(comboBoxListener);
       elbowComboBox.addActionListener(comboBoxListener);
       takeOffComboBox.addActionListener(comboBoxListener);
+      ductMaterialComboBox.addActionListener(comboBoxListener);
    }
 
    //Add action listeners for each of the buttons
@@ -164,6 +174,7 @@ public class DuctulatorView extends JFrame {
    public void displayComboBox(String radioButtonSelection) {
       if(radioButtonSelection == "Straight Duct") {
          straightDuctComboBox.setVisible(true);
+         straightDuctComboBox.setSelectedItem("Square");
          transitionComboBox.setVisible(false);
          elbowComboBox.setVisible(false);
          takeOffComboBox.setVisible(false);
@@ -171,6 +182,7 @@ public class DuctulatorView extends JFrame {
       else if(radioButtonSelection == "Transitions") {
          straightDuctComboBox.setVisible(false);
          transitionComboBox.setVisible(true);
+         transitionComboBox.setSelectedItem("Square to Square");
          elbowComboBox.setVisible(false);
          takeOffComboBox.setVisible(false);
       }
@@ -178,6 +190,7 @@ public class DuctulatorView extends JFrame {
          straightDuctComboBox.setVisible(false);
          transitionComboBox.setVisible(false);
          elbowComboBox.setVisible(true);
+         elbowComboBox.setSelectedItem("Rectangular");
          takeOffComboBox.setVisible(false);
       }
       else if(radioButtonSelection == "Take Offs") {
@@ -185,12 +198,17 @@ public class DuctulatorView extends JFrame {
          transitionComboBox.setVisible(false);
          elbowComboBox.setVisible(false);
          takeOffComboBox.setVisible(true);
+         takeOffComboBox.setSelectedItem("Side Take-off");
       }
    }
 
    //Displays the correct UI for the specific type of duct
    public void displayComboBoxInfo(String comboBox) {
       if(comboBox == "Type 1") {
+         lengthLabel1.setVisible(true);
+         lengthTextField1.setVisible(true);
+         widthLabel1.setVisible(true);
+         widthTextField1.setVisible(true);
          lengthLabel2.setVisible(false);
          lengthTextField2.setVisible(false);
          widthLabel2.setVisible(false);
@@ -207,6 +225,18 @@ public class DuctulatorView extends JFrame {
          diameterTextField.setVisible(false);
       }
       else if(comboBox == "Type 3") {
+         lengthLabel2.setVisible(false);
+         lengthTextField2.setVisible(false);
+         widthLabel2.setVisible(false);
+         widthTextField2.setVisible(false);
+         diameterLabel.setVisible(true);
+         diameterTextField.setVisible(true);
+      }
+      else if(comboBox == "Type 4") {
+         lengthLabel1.setVisible(false);
+         lengthTextField1.setVisible(false);
+         widthLabel1.setVisible(false);
+         widthTextField1.setVisible(false);
          lengthLabel2.setVisible(false);
          lengthTextField2.setVisible(false);
          widthLabel2.setVisible(false);
@@ -258,7 +288,33 @@ public class DuctulatorView extends JFrame {
       //A radio button will always be selected
       return null;
    }
-   
+
+   //Gets the selected material from the duct material combo box
+   //returns the number associated with that duct material
+   public int getDuctMaterial() {
+      //One of these numbers will be stored in the first array index of a linked list
+      // so that the duct material can be recognized
+      int galvanized = 1;
+      int steel = 2;
+      int aluminum = 3;
+      int galvanneal = 4;
+      int weldedGrease = 5;
+      String material = (String) ductMaterialComboBox.getSelectedItem();
+
+      if(material == "Galvanized")
+         return galvanized;
+      else if(material == "Steel")
+         return steel;
+      else if(material == "Aluminum")
+         return aluminum;
+      else if(material == "Galvanneal")
+         return galvanneal;
+      else if(material == "Welded Grease")
+         return weldedGrease;
+
+      return 0;
+   }
+
    //Gets the Duct size by adding the length and width that are entered
    // in lengthTextField1 and widthTextField1
    public int getDuctSize() {

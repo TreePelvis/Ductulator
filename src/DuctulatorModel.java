@@ -7,7 +7,8 @@ public class DuctulatorModel {
    private LinkedList elbowsList;
    private LinkedList takeOffsList;
    private String selectedRadioButton;
-   private String selectedComboBoxItem;
+   private String selectedDuctTypeComboBoxItem;
+   private String selectedDuctMaterialComboBoxItem;
 
    /*
       Constructor
@@ -18,27 +19,28 @@ public class DuctulatorModel {
       elbowsList = new LinkedList();
       takeOffsList = new LinkedList();
       selectedRadioButton = "Straight Duct";
-      selectedComboBoxItem = "Galvanized";
-   }  
+      selectedDuctTypeComboBoxItem = "Square";
+      selectedDuctMaterialComboBoxItem = "Galvanized";
+   }
    
    //Adds a part to the straight duct list
-   public void addToStraightDuctList(int ductSize, int total) {
-      straightDuctList.add(ductSize, total);
+   public void addToStraightDuctList(int ductMaterial, int total, int ductSize) {
+      straightDuctList.add(ductMaterial, total, ductSize);
    }
 
    //Adds a part to the transition list
-   public void addToTransitionsList(int ductSize, int total) {
-      transitionsList.add(ductSize, total);
+   public void addToTransitionsList(int ductMaterial, int total, int ductSize) {
+      transitionsList.add(ductMaterial, total, ductSize);
    }
 
    //Adds a part to the rectangular elbow duct list
-   public void addToElbowsList(int ductSize, int total) {
-      elbowsList.add(ductSize, total);
+   public void addToElbowsList(int ductMaterial, int total, int ductSize) {
+      elbowsList.add(ductMaterial, total, ductSize);
    }
    
    //Adds a part to the take off list   
-   public void addToTakeOffsList(int ductSize, int total) {
-      takeOffsList.add(ductSize, total);
+   public void addToTakeOffsList(int ductMaterial, int total, int ductSize) {
+      takeOffsList.add(ductMaterial, total, ductSize);
    }
    
    //Gets the selected radio button
@@ -47,18 +49,26 @@ public class DuctulatorModel {
    }
 
    //Gets the selected combo box item
-   public String getSelectedComboBoxItem() {
-      return selectedComboBoxItem;
+   public String getSelectedDuctTypeComboBoxItem() {
+      return selectedDuctTypeComboBoxItem;
    }
-   
+      //Gets the selected combo box item
+   public String getSelectedDuctMaterialComboBoxItem() {
+      return selectedDuctMaterialComboBoxItem;
+   }
+
    //Sets the correct radio button
    public void setSelectedRadioButton(String selectedRadioButton) {
       this.selectedRadioButton = selectedRadioButton;
    }
 
    //Sets the correct combo box item
-   public void setSelectedComboBoxItem(String selectedComboBoxItem) {
-      this.selectedComboBoxItem = selectedComboBoxItem;
+   public void setSelectedDuctTypeComboBoxItem(String selectedDuctTypeComboBoxItem) {
+      this.selectedDuctTypeComboBoxItem = selectedDuctTypeComboBoxItem;
+   }
+   //Sets the correct combo box item
+   public void setSelectedDuctMaterialComboBoxItem(String selectedDuctMaterialComboBoxItem) {
+      this.selectedDuctMaterialComboBoxItem = selectedDuctMaterialComboBoxItem;
    }
    
    //Gets a list of the total duct in the straight duct linked list

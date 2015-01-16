@@ -28,28 +28,29 @@ public class DuctulatorController {
    */
    class RadioButtonListener implements ActionListener {
       public void actionPerformed(ActionEvent e) {
-         String selection = view.getRadioButtonSelection();
-         if(selection == "Straight Duct") {
-            model.setSelectedRadioButton(selection);
-            view.displayComboBox(selection);
+         String radioButtonSelection = view.getRadioButtonSelection();
+         if(radioButtonSelection == "Straight Duct") {
+            model.setSelectedRadioButton(radioButtonSelection);
+            model.setSelectedDuctTypeComboBoxItem("Square");
+            view.displayComboBox(radioButtonSelection);
             view.displayComboBoxInfo("Type 1");
             view.displayTextArea(model.getStraightDuctTotal());
          }
-         else if(selection == "Transitions") {
-            model.setSelectedRadioButton("selection");
-            view.displayComboBox(selection);
+         else if(radioButtonSelection == "Transitions") {
+            model.setSelectedRadioButton(radioButtonSelection);
+            view.displayComboBox(radioButtonSelection);
             view.displayComboBoxInfo("Type 2");
             view.displayTextArea(model.getTransitionsTotal());
          }
-         else if(selection == "Elbows") {
-            model.setSelectedRadioButton(selection);
-            view.displayComboBox(selection);
+         else if(radioButtonSelection == "Elbows") {
+            model.setSelectedRadioButton(radioButtonSelection);
+            view.displayComboBox(radioButtonSelection);
             view.displayComboBoxInfo("Type 1");
             view.displayTextArea(model.getElbowsTotal());
          }
-         else if(selection == "Take Offs") {
-            model.setSelectedRadioButton(selection);
-            view.displayComboBox(selection);
+         else if(radioButtonSelection == "Take Offs") {
+            model.setSelectedRadioButton(radioButtonSelection);
+            view.displayComboBox(radioButtonSelection);
             view.displayComboBoxInfo("Type 1");
             view.displayTextArea(model.getTakeOffsTotal());
          }
@@ -61,25 +62,26 @@ public class DuctulatorController {
    */
    class ButtonListener implements ActionListener {
       public void actionPerformed(ActionEvent e) {
-         int ductSize = view.getDuctSize();
+         int ductMaterial = view.getDuctMaterial();
          int total = view.getDuctTotal();
-         
+         int ductSize = view.getDuctSize();
+
          String selection = view.getRadioButtonSelection();
          
          if(selection == "Straight Duct") {
-            model.addToStraightDuctList(ductSize, total);
+            model.addToStraightDuctList(ductMaterial, total, ductSize);
             view.displayTextArea(model.getStraightDuctTotal());
          }
          else if(selection == "Transitions") {
-            model.addToTransitionsList(ductSize, total);
+            model.addToTransitionsList(ductMaterial, total, ductSize);
             view.displayTextArea(model.getTransitionsTotal());
          }
          else if(selection == "Elbows") {
-            model.addToElbowsList(ductSize, total);
+            model.addToElbowsList(ductMaterial, total, ductSize);
             view.displayTextArea(model.getElbowsTotal());
          }
          else if(selection == "Take Offs") {
-            model.addToTakeOffsList(ductSize, total);
+            model.addToTakeOffsList(ductMaterial, total, ductSize);
             view.displayTextArea(model.getTakeOffsTotal());
          }
       }
@@ -91,32 +93,34 @@ public class DuctulatorController {
    class ComboBoxListener implements ActionListener {
       public void actionPerformed(ActionEvent e) {
          String selection = view.getComboBoxSelection();
-         if(selection == "Galvanized" || selection == "Steel" ||
-                 selection == "Aluminum" || selection == "Galvanneal" ||
-                 selection == "Side Take-off" ||
-                 selection == "Top Take-off") {
-            model.setSelectedComboBoxItem(selection);
+         if(selection == "Square" || selection == "Oval") {
+            model.setSelectedDuctTypeComboBoxItem(selection);
             view.displayComboBoxInfo("Type 1");
+            view.displayTextArea(model.getStraightDuctTotal());
+         }
+         else if(selection == "Round") {
+            model.setSelectedDuctTypeComboBoxItem(selection);
+            view.displayComboBoxInfo("Type 4");
             view.displayTextArea(model.getStraightDuctTotal());
          }
          else if(selection == "Rectangular" || selection == "Rect. w/ Vanes" ||
                  selection == "Radius") {
-            model.setSelectedComboBoxItem(selection);
+            model.setSelectedDuctTypeComboBoxItem(selection);
             view.displayComboBoxInfo("Type 1");
             view.displayTextArea(model.getElbowsTotal());
          }
          else if (selection == "Square to Square" || selection == "Square to Oval") {
-            model.setSelectedComboBoxItem(selection);
+            model.setSelectedDuctTypeComboBoxItem(selection);
             view.displayComboBoxInfo("Type 2");
             view.displayTextArea(model.getTransitionsTotal());
          }
          else if (selection == "Square to Round") {
-            model.setSelectedComboBoxItem(selection);
+            model.setSelectedDuctTypeComboBoxItem(selection);
             view.displayComboBoxInfo("Type 3");
             view.displayTextArea(model.getTransitionsTotal());
          }
          else if (selection == "Side Take-off" || selection == "Top Take-off") {
-            model.setSelectedComboBoxItem(selection);
+            model.setSelectedDuctTypeComboBoxItem(selection);
             view.displayComboBoxInfo("Type 1");
             view.displayTextArea(model.getTakeOffsTotal());
          }

@@ -18,8 +18,8 @@ public class LinkedList {
    }
    
    //Adds an element to the list
-   public void add(int ductSize, int total) {
-      Node temp = new Node(ductSize, total);
+   public void add(int ductMaterial, int total, int ductSize) {
+      Node temp = new Node(ductMaterial, total, ductSize);
       Node current = head;
       
       //Starting at the head node, move to the end of the list
@@ -36,30 +36,6 @@ public class LinkedList {
       //Increment the number of elements variable
       listCount++;
    }
-   
-   
-/*
-   //Inserts an element at the specified position in this list    
-   public void add(int data1, int data2, int index) {
-      Node temp = new Node(data1, data2);
-      Node current = head;
-      
-      //Move to the specified index or the last element in the list,
-      // whichever comes first
-      for (int i = 1; i < index && current.getNext() != null; i++) 
-         current = current.getNext();
-      //Set the new node's next-node reference to this node's next-node
-      // reference
-      temp.setNext(current.getNext());
-      
-      //Set this node's next-node reference to the new node
-      current.setNext(temp);
-      
-      //Increment the number of elements variable
-      listCount++;
-   }
-*/
-
 
 /*
    //Returns the element at the specified position in this list.    
@@ -150,16 +126,26 @@ public class LinkedList {
       }
        
       // Node constructor
-      public Node(int ductSize, int total) {
+      public Node(int ductMaterial, int total, int ductSize) {
          next = null;
-         data = new int[2];
-         data[0] = ductSize;
+         data = new int[3];
+         data[0] = ductMaterial;
          data[1] = total;
+         data[2] = ductSize;
       }
-       
-      // these methods should be self-explanatory
+
+      // Node constructor
+      public Node(int ductMaterial, int ductSize1, int ductSize2, int total) {
+         next = null;
+         data = new int[4];
+         data[0] = ductMaterial;
+         data[1] = total;
+         data[2] = ductSize1;
+         data[3] = ductSize2;
+      }
+
       public int getDuctSize() {
-         return data[0];
+         return data[2];
       }
        
       public void addToTotal(int total) {
@@ -167,12 +153,8 @@ public class LinkedList {
       } 
        
       public String getTextualData() {
-         return Integer.toString(data[0]) +
+         return Integer.toString(data[2]) +
                  "                      " + Integer.toString(data[1]);
-      }
-
-      public void setData(int dataValue) {
-         data[1] = dataValue;
       }
        
       public Node getNext() {
