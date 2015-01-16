@@ -1,7 +1,5 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionListener;
-
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -140,8 +138,8 @@ public class DuctulatorView extends JFrame {
       add(listScrollPane, "east, pad 10 0 0 0");
       //Font font = new Font("Verdana", Font.BOLD, 12);
       //listTextArea.setFont(font);
-      listTextArea.setText("Galvanized\nDuct Size          Total");
-
+      //listTextArea.setText("Galvanized\nDuct Size                 Total");
+      listTextArea.setText("Duct Size                 Total");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       pack();
       setLocationRelativeTo(null);
@@ -320,6 +318,15 @@ public class DuctulatorView extends JFrame {
    public int getDuctSize() {
       int length = Integer.parseInt(lengthTextField1.getText());
       int width = Integer.parseInt(widthTextField1.getText());
+      int ductSize = length + width;
+      return ductSize;
+   }
+
+   //Gets the Duct size by adding the length and width that are entered
+   // in lengthTextField1 and widthTextField1
+   public int getSecondDuctSize() {
+      int length = Integer.parseInt(lengthTextField2.getText());
+      int width = Integer.parseInt(widthTextField2.getText());
       int ductSize = length + width;
       return ductSize;
    }

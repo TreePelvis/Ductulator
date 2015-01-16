@@ -24,7 +24,7 @@ public class LinkedList {
       
       //Starting at the head node, move to the end of the list
       while (current.getNext() != null) {
-         if(current.getNext().getDuctSize() == ductSize) {
+         if(current.getNext().getFirstDuctSize() == ductSize) {
             current.getNext().addToTotal(total);
             return;
          }
@@ -33,6 +33,27 @@ public class LinkedList {
       //The last node's "next" reference set to our new node
       current.setNext(temp);
       
+      //Increment the number of elements variable
+      listCount++;
+   }
+
+   //Adds an element to the list
+   public void add(int ductMaterial, int total, int ductSize1, int ductSize2) {
+      Node temp = new Node(ductMaterial, total, ductSize1, ductSize2);
+      Node current = head;
+
+      //Starting at the head node, move to the end of the list
+      while (current.getNext() != null) {
+         if(current.getNext().getFirstDuctSize() == ductSize1 &&
+                 current.getNext().getSecondDuctSize() == ductSize2) {
+            current.getNext().addToTotal(total);
+            return;
+         }
+         current = current.getNext();
+      }
+      //The last node's "next" reference set to our new node
+      current.setNext(temp);
+
       //Increment the number of elements variable
       listCount++;
    }
@@ -100,7 +121,32 @@ public class LinkedList {
       return output;
    }
 
-    
+   //Shows the data stored in each node. This data will be displayed in the JTextArea
+   public String transitionToString() {
+      Node current = head.getNext();
+
+      String output = "";
+
+      while (current != null) {
+         output += current.getTransitionTextualData() + "\n";
+         current = current.getNext();
+      }
+      return output;
+   }
+
+   //Shows the data stored in each node. This data will be displayed in the JTextArea
+   public String roundTransitionToString() {
+      Node current = head.getNext();
+
+      String output = "";
+
+      while (current != null) {
+         output += current.getRoundTransitionTextualData() + "\n";
+         current = current.getNext();
+      }
+      return output;
+   }
+
    /**
       This private inner class stores the all the information about the node
        and the data it can store in it. In this case, the data is an array of
@@ -135,7 +181,7 @@ public class LinkedList {
       }
 
       // Node constructor
-      public Node(int ductMaterial, int ductSize1, int ductSize2, int total) {
+      public Node(int ductMaterial, int total, int ductSize1, int ductSize2) {
          next = null;
          data = new int[4];
          data[0] = ductMaterial;
@@ -144,8 +190,12 @@ public class LinkedList {
          data[3] = ductSize2;
       }
 
-      public int getDuctSize() {
+      public int getFirstDuctSize() {
          return data[2];
+      }
+
+      public int getSecondDuctSize() {
+         return data[3];
       }
        
       public void addToTotal(int total) {
@@ -153,10 +203,20 @@ public class LinkedList {
       } 
        
       public String getTextualData() {
-         return Integer.toString(data[2]) +
-                 "                      " + Integer.toString(data[1]);
+         return Integer.toString(data[2]) + "\"" +
+                 "                           " + Integer.toString(data[1]);
       }
-       
+
+      public String getTransitionTextualData() {
+         return Integer.toString(data[2]) + "\"->" + Integer.toString(data[3])
+                 + "\"" + "                  " + Integer.toString(data[1]);
+      }
+
+      public String getRoundTransitionTextualData() {
+         return Integer.toString(data[2]) + "\"->" + Integer.toString(data[3])
+                 + "\"round" + "             " + Integer.toString(data[1]);
+      }
+
       public Node getNext() {
          return next;
       }

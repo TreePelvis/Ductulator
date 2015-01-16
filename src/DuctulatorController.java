@@ -66,21 +66,24 @@ public class DuctulatorController {
          int total = view.getDuctTotal();
          int ductSize = view.getDuctSize();
 
-         String selection = view.getRadioButtonSelection();
+         String radioButtonSelection = view.getRadioButtonSelection();
+         String comboBoxSelection = view.getComboBoxSelection();
+
          
-         if(selection == "Straight Duct") {
+         if(radioButtonSelection == "Straight Duct") {
             model.addToStraightDuctList(ductMaterial, total, ductSize);
             view.displayTextArea(model.getStraightDuctTotal());
          }
-         else if(selection == "Transitions") {
-            model.addToTransitionsList(ductMaterial, total, ductSize);
+         else if(radioButtonSelection == "Transitions") {
+            int ductSize2 = view.getSecondDuctSize();
+            model.addToTransitionsList(ductMaterial, total, ductSize, ductSize2);
             view.displayTextArea(model.getTransitionsTotal());
          }
-         else if(selection == "Elbows") {
+         else if(radioButtonSelection == "Elbows") {
             model.addToElbowsList(ductMaterial, total, ductSize);
             view.displayTextArea(model.getElbowsTotal());
          }
-         else if(selection == "Take Offs") {
+         else if(radioButtonSelection == "Take Offs") {
             model.addToTakeOffsList(ductMaterial, total, ductSize);
             view.displayTextArea(model.getTakeOffsTotal());
          }
