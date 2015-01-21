@@ -21,10 +21,11 @@ public class LinkedList {
    public void add(int ductMaterial, int total, int ductSize) {
       Node temp = new Node(ductMaterial, total, ductSize);
       Node current = head;
-      
+
       //Starting at the head node, move to the end of the list
       while (current.getNext() != null) {
-         if(current.getNext().getFirstDuctSize() == ductSize) {
+         if(current.getNext().getFirstDuctSize() == ductSize &&
+                 current.getNext().getDuctMaterial() == ductMaterial) {
             current.getNext().addToTotal(total);
             return;
          }
@@ -75,7 +76,7 @@ public class LinkedList {
       }
       return current.getData();
    }
-*/   
+*/
  
    //Removes the element at the specified position in this list.   
    public boolean remove(int index){
@@ -116,6 +117,29 @@ public class LinkedList {
       
       while (current != null) {
          output += current.getTextualData() + "\n";
+         current = current.getNext();
+      }
+      return output;
+   }
+
+   //Shows the data stored in each node. This data will be displayed in the JTextArea
+   public String toString(String ductMaterial) {
+      Node current = head.getNext();
+
+      String output = "";
+
+      while (current != null) {
+         if(ductMaterial == "Galvanized" && current.getDuctMaterial() == 1 )
+            output += current.getTextualData() + "\n";
+         else if(ductMaterial == "Steel" && current.getDuctMaterial() == 2)
+            output += current.getTextualData() + "\n";
+         else if(ductMaterial == "Aluminum" && current.getDuctMaterial() == 3)
+            output += current.getTextualData() + "\n";
+         else if(ductMaterial == "Galvanneal" && current.getDuctMaterial() == 4)
+            output += current.getTextualData() + "\n";
+         else if(ductMaterial == "Welded Grease" && current.getDuctMaterial() == 5)
+            output += current.getTextualData() + "\n";
+
          current = current.getNext();
       }
       return output;
@@ -190,6 +214,14 @@ public class LinkedList {
          data[3] = ductSize2;
       }
 
+      public int getDuctMaterial() {
+         return data[0];
+      }
+
+      public int getTotal() {
+         return data[1];
+      }
+
       public int getFirstDuctSize() {
          return data[2];
       }
@@ -197,7 +229,8 @@ public class LinkedList {
       public int getSecondDuctSize() {
          return data[3];
       }
-       
+
+
       public void addToTotal(int total) {
          data[1] += total;
       } 

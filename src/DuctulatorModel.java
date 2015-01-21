@@ -11,7 +11,6 @@ public class DuctulatorModel {
    private String selectedRadioButton;
    private String selectedDuctTypeComboBoxItem;
    private String selectedDuctMaterialComboBoxItem;
-   private String text = "Duct Size                 Total\n";
 
    /*
       Constructor
@@ -76,12 +75,14 @@ public class DuctulatorModel {
    
    //Gets a list of the total duct in the straight duct linked list
    public String getStraightDuctTotal() {
-      text += straightDuctList.toString();
+      String text = "Duct Size                 Total\n";
+      text += straightDuctList.toString(selectedDuctMaterialComboBoxItem);
       return text;
    }
    
    //Gets a list of the total duct in the transition linked list 
    public String getTransitionsTotal() {
+      String text = "Duct Size                 Total\n";
       if(selectedDuctMaterialComboBoxItem == "Square to Round")
          text += transitionsList.roundTransitionToString();
       else
@@ -91,36 +92,15 @@ public class DuctulatorModel {
    
    //Gets a list of the total duct in the rectangular elbow linked list
    public String getElbowsTotal() {
+      String text = "Duct Size                 Total\n";
       text += elbowsList.toString();
       return text;
    }
    
    //Gets a list of the total duct in the take off linked list
    public String getTakeOffsTotal() {
+      String text = "Duct Size                 Total\n";
       text += takeOffsList.toString();
       return text;
-   }
-
-   //Gets the selected type of duct material and returns the text for
-   // the heading of the JTextArea
-   public String getTextHeading(String ductMaterial) {
-      String galvanizedText = "Galvanized\nDuct Size                 Total\n";
-      String steelText = "Steel\nDuct Size                 Total\n";
-      String aluminumText = "Aluminum\nDuct Size                 Total\n";
-      String galvannealText = "Galvanneal\nDuct Size                 Total\n";
-      String weldedGreaseText = "Welded Grease\nDuct Size                 Total\n";
-
-      if(ductMaterial == "Galvanized")
-         return galvanizedText;
-      else if (ductMaterial == "Steel")
-         return steelText;
-      else if (ductMaterial == "Steel")
-         return aluminumText;
-      else if (ductMaterial == "Aluminum")
-         return galvannealText;
-      else if (ductMaterial == "Welded Grease")
-         return weldedGreaseText;
-      else
-         return "";
    }
 }

@@ -10,7 +10,6 @@ public class DuctulatorClient {
             DuctulatorView view = new DuctulatorView(model);
             DuctulatorController controller = new DuctulatorController(model, view);
             view.setVisible(true);
-
          }
       });
    } 

@@ -67,9 +67,7 @@ public class DuctulatorController {
          int ductSize = view.getDuctSize();
 
          String radioButtonSelection = view.getRadioButtonSelection();
-         String comboBoxSelection = view.getDuctTypeComboBoxSelection();
 
-         
          if(radioButtonSelection == "Straight Duct") {
             model.addToStraightDuctList(ductMaterial, total, ductSize);
             view.displayTextArea(model.getStraightDuctTotal());
@@ -96,9 +94,9 @@ public class DuctulatorController {
    class ComboBoxListener implements ActionListener {
       public void actionPerformed(ActionEvent e) {
          //Gets the selected duct material combo box item
-         String ductMaterialSelection = view.getDuctMaterialComboBoxSelection() + " Duct";
+         String ductMaterialSelection = view.getDuctMaterialComboBoxSelection();
          //Displays the selected duct material above the JTextArea
-         view.setDuctMaterialLabel(ductMaterialSelection);
+         view.setDuctMaterialLabel(ductMaterialSelection + " Duct");
 
          //Gets the selected duct type combo box item
          String ductTypeSelection = view.getDuctTypeComboBoxSelection();
