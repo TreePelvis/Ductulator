@@ -67,7 +67,7 @@ public class DuctulatorController {
          int ductSize = view.getDuctSize();
 
          String radioButtonSelection = view.getRadioButtonSelection();
-         String comboBoxSelection = view.getComboBoxSelection();
+         String comboBoxSelection = view.getDuctTypeComboBoxSelection();
 
          
          if(radioButtonSelection == "Straight Duct") {
@@ -95,35 +95,43 @@ public class DuctulatorController {
    */
    class ComboBoxListener implements ActionListener {
       public void actionPerformed(ActionEvent e) {
-         String selection = view.getComboBoxSelection();
-         if(selection == "Square" || selection == "Oval") {
-            model.setSelectedDuctTypeComboBoxItem(selection);
+         //Gets the selected duct material combo box item
+         String ductMaterialSelection = view.getDuctMaterialComboBoxSelection() + " Duct";
+         //Displays the selected duct material above the JTextArea
+         view.setDuctMaterialLabel(ductMaterialSelection);
+
+         //Gets the selected duct type combo box item
+         String ductTypeSelection = view.getDuctTypeComboBoxSelection();
+         //Displays the correct combo box info and the duct list according to the
+         // selected duct type
+         if(ductTypeSelection == "Square" || ductTypeSelection == "Oval") {
+            model.setSelectedDuctTypeComboBoxItem(ductTypeSelection);
             view.displayComboBoxInfo("Type 1");
             view.displayTextArea(model.getStraightDuctTotal());
          }
-         else if(selection == "Round") {
-            model.setSelectedDuctTypeComboBoxItem(selection);
+         else if(ductTypeSelection == "Round") {
+            model.setSelectedDuctTypeComboBoxItem(ductTypeSelection);
             view.displayComboBoxInfo("Type 4");
             view.displayTextArea(model.getStraightDuctTotal());
          }
-         else if(selection == "Rectangular" || selection == "Rect. w/ Vanes" ||
-                 selection == "Radius") {
-            model.setSelectedDuctTypeComboBoxItem(selection);
+         else if(ductTypeSelection == "Rectangular" || ductTypeSelection == "Rect. w/ Vanes" ||
+                 ductTypeSelection == "Radius") {
+            model.setSelectedDuctTypeComboBoxItem(ductTypeSelection);
             view.displayComboBoxInfo("Type 1");
             view.displayTextArea(model.getElbowsTotal());
          }
-         else if (selection == "Square to Square" || selection == "Square to Oval") {
-            model.setSelectedDuctTypeComboBoxItem(selection);
+         else if (ductTypeSelection == "Square to Square" || ductTypeSelection == "Square to Oval") {
+            model.setSelectedDuctTypeComboBoxItem(ductTypeSelection);
             view.displayComboBoxInfo("Type 2");
             view.displayTextArea(model.getTransitionsTotal());
          }
-         else if (selection == "Square to Round") {
-            model.setSelectedDuctTypeComboBoxItem(selection);
+         else if (ductTypeSelection == "Square to Round") {
+            model.setSelectedDuctTypeComboBoxItem(ductTypeSelection);
             view.displayComboBoxInfo("Type 3");
             view.displayTextArea(model.getTransitionsTotal());
          }
-         else if (selection == "Side Take-off" || selection == "Top Take-off") {
-            model.setSelectedDuctTypeComboBoxItem(selection);
+         else if (ductTypeSelection == "Side Take-off" || ductTypeSelection == "Top Take-off") {
+            model.setSelectedDuctTypeComboBoxItem(ductTypeSelection);
             view.displayComboBoxInfo("Type 1");
             view.displayTextArea(model.getTakeOffsTotal());
          }

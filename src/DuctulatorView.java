@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import net.miginfocom.swing.MigLayout;
 
@@ -6,12 +8,12 @@ import net.miginfocom.swing.MigLayout;
    DuctulatorView sets up the UI for this GUI
 */
 public class DuctulatorView extends JFrame {
-   private String[] ductMaterial = {"Galvanized", "Steel", "Aluminum", "Galvanneal", "Welded Grease"};
+   private String[] ductMaterialList = {"Galvanized", "Steel", "Aluminum", "Galvanneal", "Welded Grease"};
    private JComboBox ductMaterialComboBox;
-   private String[] straightDuctTypes = {"Square", "Round", "Oval"};
-   private String[] transitionDuctTypes = {"Square to Square", "Square to Round", "Square to Oval"};
-   private String[] elbowDuctTypes = {"Rectangular", "Rect. w/ Vanes", "Radius"};
-   private String[] takoOffDuctTypes = {"Side Take-off", "Top Take-off"};
+   private String[] straightDuctTypesList = {"Square", "Round", "Oval"};
+   private String[] transitionDuctTypesList = {"Square to Square", "Square to Round", "Square to Oval"};
+   private String[] elbowDuctTypesList = {"Rectangular", "Rect. w/ Vanes", "Radius"};
+   private String[] takoOffDuctTypesList = {"Side Take-off", "Top Take-off"};
    private JComboBox straightDuctComboBox;
    private JComboBox transitionComboBox;
    private JComboBox elbowComboBox;
@@ -35,8 +37,10 @@ public class DuctulatorView extends JFrame {
    private JTextField lengthTextField2;
    private JTextField widthTextField2;
    private JButton addButton;
+   private JLabel ductMaterialLabel;
    private JTextArea listTextArea;
    private JScrollPane listScrollPane;
+   private String initialText = "Duct Size                 Total\n";
 
    /*
       Constructor
@@ -50,7 +54,7 @@ public class DuctulatorView extends JFrame {
       //Sets the layout to MigLayout
       setLayout(new MigLayout("hidemode 3, insets 10 n n n, fill", "10[]30[][127]30[]"));
 
-      ductMaterialComboBox = new JComboBox(ductMaterial);
+      ductMaterialComboBox = new JComboBox(ductMaterialList);
       add(ductMaterialComboBox, "left, growx, wrap");
 
       straightDuct = new JRadioButton("Straight Duct", true);
@@ -82,10 +86,10 @@ public class DuctulatorView extends JFrame {
       add(elbows, "left, cell 0 3");
       add(takeOffs, "left, cell 0 4");
 
-      straightDuctComboBox = new JComboBox(straightDuctTypes);
-      transitionComboBox = new JComboBox(transitionDuctTypes);
-      elbowComboBox = new JComboBox(elbowDuctTypes);
-      takeOffComboBox = new JComboBox(takoOffDuctTypes);
+      straightDuctComboBox = new JComboBox(straightDuctTypesList);
+      transitionComboBox = new JComboBox(transitionDuctTypesList);
+      elbowComboBox = new JComboBox(elbowDuctTypesList);
+      takeOffComboBox = new JComboBox(takoOffDuctTypesList);
 
       add(straightDuctComboBox, "left, cell 2 0, growx");
       add(transitionComboBox, "left, cell 2 0, growx");
@@ -131,15 +135,21 @@ public class DuctulatorView extends JFrame {
       widthLabel2.setVisible(false);
       widthTextField2.setVisible(false);
 
-      listTextArea = new JTextArea(13, 13);
+      Font font = new Font("Verdana", Font.BOLD, 12);
+
+      ductMaterialLabel = new JLabel("Galvanized Duct");
+      ductMaterialLabel.setFont(font);
+      add(ductMaterialLabel, "left, cell 3 0");
+
+      listTextArea = new JTextArea(15, 15);
       listTextArea.setLineWrap(true);
       listScrollPane = new JScrollPane(listTextArea);
       listScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-      add(listScrollPane, "east, pad 10 0 0 0");
-      //Font font = new Font("Verdana", Font.BOLD, 12);
-      //listTextArea.setFont(font);
-      //listTextArea.setText("Galvanized\nDuct Size                 Total");
-      listTextArea.setText("Duct Size                 Total");
+      add(listScrollPane, "cell 3 1, spany 14");
+      DefaultCaret caret = (DefaultCaret) listTextArea.getCaret();
+      caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+      listTextArea.setFont(font);
+      listTextArea.setText(initialText);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       pack();
       setLocationRelativeTo(null);
@@ -215,6 +225,10 @@ public class DuctulatorView extends JFrame {
          diameterTextField.setVisible(false);
       }
       else if(comboBox == "Type 2") {
+         lengthLabel1.setVisible(true);
+         lengthTextField1.setVisible(true);
+         widthLabel1.setVisible(true);
+         widthTextField1.setVisible(true);
          lengthLabel2.setVisible(true);
          lengthTextField2.setVisible(true);
          widthLabel2.setVisible(true);
@@ -263,8 +277,9 @@ public class DuctulatorView extends JFrame {
       return null;
    }
 
-   //Gets the combo box item that's currently selected and returns the text from it
-   public String getComboBoxSelection() {
+   //Gets the combo box item that's currently selected in the duct type
+   // combo box and returns the text from it
+   public String getDuctTypeComboBoxSelection() {
       String selection;
       if(straightDuct.isSelected()) {
          selection = (String) straightDuctComboBox.getSelectedItem();
@@ -285,6 +300,13 @@ public class DuctulatorView extends JFrame {
       //This return statement does nothing and is only needed to complete the method.
       //A radio button will always be selected
       return null;
+   }
+
+   //Gets the combo box item that's currently selected in the duct material
+   // combo box and returns the text from it
+   public String getDuctMaterialComboBoxSelection() {
+      String selection = (String) ductMaterialComboBox.getSelectedItem();
+      return selection;
    }
 
    //Gets the selected material from the duct material combo box
@@ -340,5 +362,9 @@ public class DuctulatorView extends JFrame {
    //Displays the data stored in the linked list of the selected radio button
    public void displayTextArea(String text) {
       listTextArea.setText(text);
+   }
+
+   public void setDuctMaterialLabel(String label) {
+      ductMaterialLabel.setText(label);
    }
 }
