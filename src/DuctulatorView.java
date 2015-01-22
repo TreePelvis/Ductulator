@@ -352,6 +352,12 @@ public class DuctulatorView extends JFrame {
       int ductSize = length + width;
       return ductSize;
    }
+
+   //Gets the Duct size by parsing diameterTextField
+   public int getDuctDiameter() {
+      int diameter = Integer.parseInt(diameterTextField.getText());
+      return diameter;
+   }
    
    //Gets the total amount of duct entered in totalTextField
    public int getDuctTotal() {

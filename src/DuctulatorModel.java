@@ -84,23 +84,23 @@ public class DuctulatorModel {
    public String getTransitionsTotal() {
       String text = "Duct Size                 Total\n";
       if(selectedDuctMaterialComboBoxItem == "Square to Round")
-         text += transitionsList.roundTransitionToString();
+         text += transitionsList.roundTransitionToString(selectedDuctMaterialComboBoxItem);
       else
-         text += transitionsList.transitionToString();
+         text += transitionsList.transitionToString(selectedDuctMaterialComboBoxItem);
       return text;
    }
    
    //Gets a list of the total duct in the rectangular elbow linked list
    public String getElbowsTotal() {
       String text = "Duct Size                 Total\n";
-      text += elbowsList.toString();
+      text += elbowsList.toString(selectedDuctMaterialComboBoxItem);
       return text;
    }
    
    //Gets a list of the total duct in the take off linked list
    public String getTakeOffsTotal() {
       String text = "Duct Size                 Total\n";
-      text += takeOffsList.toString();
+      text += takeOffsList.toString(selectedDuctMaterialComboBoxItem);
       return text;
    }
 }

@@ -106,21 +106,6 @@ public class LinkedList {
    public int size() {
       return listCount;
    }
-   
-   
-   
-   //Shows the data stored in each node. This data will be displayed in the JTextArea
-   public String toString() {
-      Node current = head.getNext();
-      
-      String output = "";
-      
-      while (current != null) {
-         output += current.getTextualData() + "\n";
-         current = current.getNext();
-      }
-      return output;
-   }
 
    //Shows the data stored in each node. This data will be displayed in the JTextArea
    public String toString(String ductMaterial) {
@@ -146,26 +131,46 @@ public class LinkedList {
    }
 
    //Shows the data stored in each node. This data will be displayed in the JTextArea
-   public String transitionToString() {
+   public String transitionToString(String ductMaterial) {
       Node current = head.getNext();
 
       String output = "";
 
       while (current != null) {
-         output += current.getTransitionTextualData() + "\n";
+         if(ductMaterial == "Galvanized" && current.getDuctMaterial() == 1 )
+            output += current.getTransitionTextualData() + "\n";
+         else if(ductMaterial == "Steel" && current.getDuctMaterial() == 2)
+            output += current.getTransitionTextualData() + "\n";
+         else if(ductMaterial == "Aluminum" && current.getDuctMaterial() == 3)
+            output += current.getTransitionTextualData() + "\n";
+         else if(ductMaterial == "Galvanneal" && current.getDuctMaterial() == 4)
+            output += current.getTransitionTextualData() + "\n";
+         else if(ductMaterial == "Welded Grease" && current.getDuctMaterial() == 5)
+            output += current.getTransitionTextualData() + "\n";
+
          current = current.getNext();
       }
       return output;
    }
 
    //Shows the data stored in each node. This data will be displayed in the JTextArea
-   public String roundTransitionToString() {
+   public String roundTransitionToString(String ductMaterial) {
       Node current = head.getNext();
 
       String output = "";
 
       while (current != null) {
-         output += current.getRoundTransitionTextualData() + "\n";
+         if(ductMaterial == "Galvanized" && current.getDuctMaterial() == 1 )
+            output += current.getRoundTransitionTextualData() + "\n";
+         else if(ductMaterial == "Steel" && current.getDuctMaterial() == 2)
+            output += current.getRoundTransitionTextualData() + "\n";
+         else if(ductMaterial == "Aluminum" && current.getDuctMaterial() == 3)
+            output += current.getRoundTransitionTextualData() + "\n";
+         else if(ductMaterial == "Galvanneal" && current.getDuctMaterial() == 4)
+            output += current.getRoundTransitionTextualData() + "\n";
+         else if(ductMaterial == "Welded Grease" && current.getDuctMaterial() == 5)
+            output += current.getRoundTransitionTextualData() + "\n";
+
          current = current.getNext();
       }
       return output;

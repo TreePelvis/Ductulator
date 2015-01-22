@@ -95,9 +95,9 @@ public class DuctulatorController {
       public void actionPerformed(ActionEvent e) {
          //Gets the selected duct material combo box item
          String ductMaterialSelection = view.getDuctMaterialComboBoxSelection();
+         model.setSelectedDuctMaterialComboBoxItem(ductMaterialSelection);
          //Displays the selected duct material above the JTextArea
          view.setDuctMaterialLabel(ductMaterialSelection + " Duct");
-
          //Gets the selected duct type combo box item
          String ductTypeSelection = view.getDuctTypeComboBoxSelection();
          //Displays the correct combo box info and the duct list according to the
