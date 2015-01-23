@@ -41,6 +41,10 @@ public class DuctulatorView extends JFrame {
    private JTextArea listTextArea;
    private JScrollPane listScrollPane;
    private String initialText = "Duct Size                 Total\n";
+   private boolean straightDuctIsSelected;
+   private boolean transitionIsSelected;
+   private boolean elbowIsSelected;
+   private boolean takeOffIsSelected;
 
    /*
       Constructor
@@ -58,9 +62,13 @@ public class DuctulatorView extends JFrame {
       add(ductMaterialComboBox, "left, growx, wrap");
 
       straightDuct = new JRadioButton("Straight Duct", true);
+      straightDuctIsSelected = true;
       transitions = new JRadioButton("Transitions", false);
+      transitionIsSelected = false;
       elbows = new JRadioButton("Elbows", false);
+      elbowIsSelected = false;
       takeOffs = new JRadioButton("Take Offs", false);
+      takeOffIsSelected = false;
 
       if(straightDuct.isSelected()) {
          model.setSelectedRadioButton("Straight Duct");
@@ -141,7 +149,7 @@ public class DuctulatorView extends JFrame {
       ductMaterialLabel.setFont(font);
       add(ductMaterialLabel, "left, cell 3 0");
 
-      listTextArea = new JTextArea(15, 15);
+      listTextArea = new JTextArea(13, 15);
       listTextArea.setLineWrap(true);
       listScrollPane = new JScrollPane(listTextArea);
       listScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -331,8 +339,63 @@ public class DuctulatorView extends JFrame {
          return galvanneal;
       else if(material == "Welded Grease")
          return weldedGrease;
+      else
+         return 0;
+   }
 
-      return 0;
+   //Gets the selected fitting from the duct type combo box
+   //returns the number associated with that duct type
+   public int getDuctFitting() {
+      //One of these numbers will be stored in the second array index of a linked list
+      // so that the duct fitting can be recognized
+      int square = 1;
+      int round = 2;
+      int oval = 3;
+      int squareToSquare = 4;
+      int squareToRound = 5;
+      int squareToOval = 6;
+      int rectangular = 7;
+      int rectWithVanes = 8;
+      int radius = 9;
+      int sideTakeOff = 10;
+      int topTakeOff = 11;
+
+      String material = "";
+
+      if(straightDuctIsSelected)
+         material = (String) straightDuctComboBox.getSelectedItem();
+      else if(transitionIsSelected)
+         material = (String) transitionComboBox.getSelectedItem();
+      else if(elbowIsSelected)
+         material = (String) elbowComboBox.getSelectedItem();
+      else if(takeOffIsSelected)
+         material = (String) takeOffComboBox.getSelectedItem();
+
+
+      if(material == "Square")
+         return square;
+      else if(material == "Round")
+         return round;
+      else if(material == "Oval")
+         return oval;
+      else if(material == "Square to Square")
+         return squareToSquare;
+      else if(material == "Square to Round")
+         return squareToRound;
+      else if(material == "Square to Oval")
+         return squareToOval;
+      else if(material == "Rectangular")
+         return rectangular;
+      else if(material == "Rect. w/ Vanes")
+         return rectWithVanes;
+      else if(material == "Radius")
+         return radius;
+      else if(material == "Side Take-Off")
+         return sideTakeOff;
+      else if(material == "Top Take-Off")
+         return topTakeOff;
+      else
+         return 0;
    }
 
    //Gets the Duct size by adding the length and width that are entered
@@ -363,6 +426,33 @@ public class DuctulatorView extends JFrame {
    public int getDuctTotal() {
       int total = Integer.parseInt(totalTextField.getText());
       return total;
+   }
+
+   public void setSelectedFittingComboBox(String selectedFittingComboBox) {
+      if(selectedFittingComboBox == "Straight Duct") {
+         straightDuctIsSelected = true;
+         transitionIsSelected = false;
+         elbowIsSelected = false;
+         takeOffIsSelected = false;
+      }
+      else if(selectedFittingComboBox == "Transitions") {
+         straightDuctIsSelected = false;
+         transitionIsSelected = true;
+         elbowIsSelected = false;
+         takeOffIsSelected = false;
+      }
+      else if(selectedFittingComboBox == "Elbows") {
+         straightDuctIsSelected = false;
+         transitionIsSelected = false;
+         elbowIsSelected = true;
+         takeOffIsSelected = false;
+      }
+      else if(selectedFittingComboBox == "Take Offs") {
+         straightDuctIsSelected = false;
+         transitionIsSelected = false;
+         elbowIsSelected = false;
+         takeOffIsSelected = true;
+      }
    }
    
    //Displays the data stored in the linked list of the selected radio button

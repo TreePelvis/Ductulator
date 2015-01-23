@@ -29,28 +29,28 @@ public class DuctulatorController {
    class RadioButtonListener implements ActionListener {
       public void actionPerformed(ActionEvent e) {
          String radioButtonSelection = view.getRadioButtonSelection();
+         model.setSelectedRadioButton(radioButtonSelection);
+         view.setSelectedFittingComboBox(radioButtonSelection);
+         view.displayComboBox(radioButtonSelection);
+
          if(radioButtonSelection == "Straight Duct") {
-            model.setSelectedRadioButton(radioButtonSelection);
             model.setSelectedDuctTypeComboBoxItem("Square");
-            view.displayComboBox(radioButtonSelection);
+            //view.displayComboBox(radioButtonSelection);
             view.displayComboBoxInfo("Type 1");
             view.displayTextArea(model.getStraightDuctTotal());
          }
          else if(radioButtonSelection == "Transitions") {
-            model.setSelectedRadioButton(radioButtonSelection);
-            view.displayComboBox(radioButtonSelection);
+            model.setSelectedDuctTypeComboBoxItem("Square to Square");
             view.displayComboBoxInfo("Type 2");
             view.displayTextArea(model.getTransitionsTotal());
          }
          else if(radioButtonSelection == "Elbows") {
-            model.setSelectedRadioButton(radioButtonSelection);
-            view.displayComboBox(radioButtonSelection);
+            model.setSelectedDuctTypeComboBoxItem("Rectangular");
             view.displayComboBoxInfo("Type 1");
             view.displayTextArea(model.getElbowsTotal());
          }
          else if(radioButtonSelection == "Take Offs") {
-            model.setSelectedRadioButton(radioButtonSelection);
-            view.displayComboBox(radioButtonSelection);
+            model.setSelectedDuctTypeComboBoxItem("Side Take-Off");
             view.displayComboBoxInfo("Type 1");
             view.displayTextArea(model.getTakeOffsTotal());
          }
@@ -62,27 +62,48 @@ public class DuctulatorController {
    */
    class ButtonListener implements ActionListener {
       public void actionPerformed(ActionEvent e) {
-         int ductMaterial = view.getDuctMaterial();
-         int total = view.getDuctTotal();
-         int ductSize = view.getDuctSize();
-
          String radioButtonSelection = view.getRadioButtonSelection();
 
+         int ductMaterial = view.getDuctMaterial();
+         int ductFitting = view.getDuctFitting();
+         int total = view.getDuctTotal();
+         int ductSize;
+         int ductSize2;
+         int ductDiameter;
+
          if(radioButtonSelection == "Straight Duct") {
-            model.addToStraightDuctList(ductMaterial, total, ductSize);
+            if(model.getSelectedDuctTypeComboBoxItem() == "Round") {
+               ductDiameter = view.getDuctDiameter();
+               model.addToStraightDuctList(ductMaterial, ductFitting, total, ductDiameter);
+            }
+            else {
+               ductSize = view.getDuctSize();
+               model.addToStraightDuctList(ductMaterial, ductFitting, total, ductSize);
+            }
+
             view.displayTextArea(model.getStraightDuctTotal());
          }
          else if(radioButtonSelection == "Transitions") {
-            int ductSize2 = view.getSecondDuctSize();
-            model.addToTransitionsList(ductMaterial, total, ductSize, ductSize2);
+            if(model.getSelectedDuctTypeComboBoxItem() == "Square to Round") {
+               ductSize = view.getDuctSize();
+               ductDiameter = view.getDuctDiameter();
+               model.addToTransitionsList(ductMaterial, ductFitting, total, ductSize, ductDiameter);
+            }
+            else  {
+               ductSize = view.getDuctSize();
+               ductSize2 = view.getSecondDuctSize();
+               model.addToTransitionsList(ductMaterial, ductFitting, total, ductSize, ductSize2);
+            }
             view.displayTextArea(model.getTransitionsTotal());
          }
          else if(radioButtonSelection == "Elbows") {
-            model.addToElbowsList(ductMaterial, total, ductSize);
+            ductSize = view.getDuctSize();
+            model.addToElbowsList(ductMaterial, ductFitting, total, ductSize);
             view.displayTextArea(model.getElbowsTotal());
          }
          else if(radioButtonSelection == "Take Offs") {
-            model.addToTakeOffsList(ductMaterial, total, ductSize);
+            ductSize = view.getDuctSize();
+            model.addToTakeOffsList(ductMaterial, ductFitting, total, ductSize);
             view.displayTextArea(model.getTakeOffsTotal());
          }
       }

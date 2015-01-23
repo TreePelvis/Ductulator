@@ -26,23 +26,23 @@ public class DuctulatorModel {
    }
    
    //Adds a part to the straight duct list
-   public void addToStraightDuctList(int ductMaterial, int total, int ductSize) {
-      straightDuctList.add(ductMaterial, total, ductSize);
+   public void addToStraightDuctList(int ductMaterial, int ductFitting, int total, int ductSize) {
+      straightDuctList.add(ductMaterial, ductFitting, total, ductSize);
    }
 
    //Adds a part to the transition list
-   public void addToTransitionsList(int ductMaterial, int total, int ductSize1, int ductSize2) {
-      transitionsList.add(ductMaterial, total, ductSize1, ductSize2);
+   public void addToTransitionsList(int ductMaterial, int ductFitting, int total, int ductSize1, int ductSize2) {
+      transitionsList.add(ductMaterial, ductFitting, total, ductSize1, ductSize2);
    }
 
    //Adds a part to the rectangular elbow duct list
-   public void addToElbowsList(int ductMaterial, int total, int ductSize) {
-      elbowsList.add(ductMaterial, total, ductSize);
+   public void addToElbowsList(int ductMaterial, int ductFitting, int total, int ductSize) {
+      elbowsList.add(ductMaterial, ductFitting, total, ductSize);
    }
    
    //Adds a part to the take off list   
-   public void addToTakeOffsList(int ductMaterial, int total, int ductSize) {
-      takeOffsList.add(ductMaterial, total, ductSize);
+   public void addToTakeOffsList(int ductMaterial, int ductFitting, int total, int ductSize) {
+      takeOffsList.add(ductMaterial, ductFitting, total, ductSize);
    }
    
    //Gets the selected radio button
@@ -76,7 +76,7 @@ public class DuctulatorModel {
    //Gets a list of the total duct in the straight duct linked list
    public String getStraightDuctTotal() {
       String text = "Duct Size                 Total\n";
-      text += straightDuctList.toString(selectedDuctMaterialComboBoxItem);
+      text += straightDuctList.toString(selectedDuctMaterialComboBoxItem, selectedDuctTypeComboBoxItem);
       return text;
    }
    
@@ -93,14 +93,14 @@ public class DuctulatorModel {
    //Gets a list of the total duct in the rectangular elbow linked list
    public String getElbowsTotal() {
       String text = "Duct Size                 Total\n";
-      text += elbowsList.toString(selectedDuctMaterialComboBoxItem);
+      text += elbowsList.toString(selectedDuctMaterialComboBoxItem, selectedDuctTypeComboBoxItem);
       return text;
    }
    
    //Gets a list of the total duct in the take off linked list
    public String getTakeOffsTotal() {
       String text = "Duct Size                 Total\n";
-      text += takeOffsList.toString(selectedDuctMaterialComboBoxItem);
+      text += takeOffsList.toString(selectedDuctMaterialComboBoxItem, selectedDuctTypeComboBoxItem);
       return text;
    }
 }

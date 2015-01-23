@@ -18,8 +18,8 @@ public class LinkedList {
    }
    
    //Adds an element to the list
-   public void add(int ductMaterial, int total, int ductSize) {
-      Node temp = new Node(ductMaterial, total, ductSize);
+   public void add(int ductMaterial, int ductFitting, int total, int ductSize) {
+      Node temp = new Node(ductMaterial, ductFitting, total, ductSize);
       Node current = head;
 
       //Starting at the head node, move to the end of the list
@@ -39,8 +39,8 @@ public class LinkedList {
    }
 
    //Adds an element to the list
-   public void add(int ductMaterial, int total, int ductSize1, int ductSize2) {
-      Node temp = new Node(ductMaterial, total, ductSize1, ductSize2);
+   public void add(int ductMaterial, int ductFitting, int total, int ductSize1, int ductSize2) {
+      Node temp = new Node(ductMaterial, ductFitting, total, ductSize1, ductSize2);
       Node current = head;
 
       //Starting at the head node, move to the end of the list
@@ -108,25 +108,60 @@ public class LinkedList {
    }
 
    //Shows the data stored in each node. This data will be displayed in the JTextArea
-   public String toString(String ductMaterial) {
+   public String toString(String ductMaterial, String ductFitting) {
       Node current = head.getNext();
 
       String output = "";
 
       while (current != null) {
-         if(ductMaterial == "Galvanized" && current.getDuctMaterial() == 1 )
-            output += current.getTextualData() + "\n";
+         if(ductMaterial == "Galvanized" && current.getDuctMaterial() == 1)
+            output = getOutput(ductFitting, current, output);
          else if(ductMaterial == "Steel" && current.getDuctMaterial() == 2)
-            output += current.getTextualData() + "\n";
+            output = getOutput(ductFitting, current, output);
          else if(ductMaterial == "Aluminum" && current.getDuctMaterial() == 3)
-            output += current.getTextualData() + "\n";
+            output = getOutput(ductFitting, current, output);
          else if(ductMaterial == "Galvanneal" && current.getDuctMaterial() == 4)
-            output += current.getTextualData() + "\n";
+            output = getOutput(ductFitting, current, output);
          else if(ductMaterial == "Welded Grease" && current.getDuctMaterial() == 5)
-            output += current.getTextualData() + "\n";
+            output = getOutput(ductFitting, current, output);
 
          current = current.getNext();
       }
+      return output;
+
+        /* if(ductFitting == "Square" && current.getDuctFitting() == 1)
+            output += current.getTextualData() + "\n";
+         else if(ductFitting == "Round" && current.getDuctFitting() == 2)
+            output += current.getTextualData() + "\n";
+         else if(ductFitting == "Oval" && current.getDuctFitting() == 3)
+            output += current.getTextualData() + "\n";*/
+
+
+   }
+
+   private String getOutput(String ductFitting, Node current, String output) {
+      if(ductFitting == "Square" && current.getDuctFitting() == 1)
+         output += current.getTextualData() + "\n";
+      else if (ductFitting == "Round" && current.getDuctFitting() == 2)
+         output += current.getTextualData() + "\n";
+      else if (ductFitting == "Oval" && current.getDuctFitting() == 3)
+         output += current.getTextualData() + "\n";
+      else if (ductFitting == "Square to Square" && current.getDuctFitting() == 4)
+         output += current.getTextualData() + "\n";
+      else if (ductFitting == "Square to Round" && current.getDuctFitting() == 5)
+         output += current.getTextualData() + "\n";
+      else if (ductFitting == "Square to Oval" && current.getDuctFitting() == 6)
+         output += current.getTextualData() + "\n";
+      else if (ductFitting == "Rectangular" && current.getDuctFitting() == 7)
+         output += current.getTextualData() + "\n";
+      else if (ductFitting == "Rect. w/ Vanes" && current.getDuctFitting() == 8)
+         output += current.getTextualData() + "\n";
+      else if (ductFitting == "Radius" && current.getDuctFitting() == 9)
+         output += current.getTextualData() + "\n";
+      else if (ductFitting == "Side Take-Off" && current.getDuctFitting() == 10)
+         output += current.getTextualData() + "\n";
+      else if (ductFitting == "Top Take-Off" && current.getDuctFitting() == 11)
+         output += current.getTextualData() + "\n";
       return output;
    }
 
@@ -201,34 +236,40 @@ public class LinkedList {
       }
        
       // Node constructor
-      public Node(int ductMaterial, int total, int ductSize) {
-         next = null;
-         data = new int[3];
-         data[0] = ductMaterial;
-         data[1] = total;
-         data[2] = ductSize;
-      }
-
-      // Node constructor
-      public Node(int ductMaterial, int total, int ductSize1, int ductSize2) {
+      public Node(int ductMaterial, int ductFitting, int total, int ductSize) {
          next = null;
          data = new int[4];
          data[0] = ductMaterial;
-         data[1] = total;
-         data[2] = ductSize1;
-         data[3] = ductSize2;
+         data[1] = ductFitting;
+         data[2] = total;
+         data[3] = ductSize;
+      }
+
+      // Node constructor
+      public Node(int ductMaterial, int ductFitting, int total, int ductSize1, int ductSize2) {
+         next = null;
+         data = new int[5];
+         data[0] = ductMaterial;
+         data[1] = ductFitting;
+         data[2] = total;
+         data[3] = ductSize1;
+         data[4] = ductSize2;
       }
 
       public int getDuctMaterial() {
          return data[0];
       }
 
-      public int getTotal() {
+      public int getDuctFitting() {
          return data[1];
       }
 
-      public int getFirstDuctSize() {
+      public int getTotal() {
          return data[2];
+      }
+
+      public int getFirstDuctSize() {
+         return data[3];
       }
 
       public int getSecondDuctSize() {
@@ -237,22 +278,22 @@ public class LinkedList {
 
 
       public void addToTotal(int total) {
-         data[1] += total;
+         data[2] += total;
       } 
        
       public String getTextualData() {
-         return Integer.toString(data[2]) + "\"" +
-                 "                           " + Integer.toString(data[1]);
+         return Integer.toString(data[3]) + "\"" +
+                 "                           " + Integer.toString(data[2]);
       }
 
       public String getTransitionTextualData() {
-         return Integer.toString(data[2]) + "\"->" + Integer.toString(data[3])
-                 + "\"" + "                  " + Integer.toString(data[1]);
+         return Integer.toString(data[3]) + "\"->" + Integer.toString(data[4])
+                 + "\"" + "                  " + Integer.toString(data[2]);
       }
 
       public String getRoundTransitionTextualData() {
-         return Integer.toString(data[2]) + "\"->" + Integer.toString(data[3])
-                 + "\"round" + "             " + Integer.toString(data[1]);
+         return Integer.toString(data[3]) + "\"->" + Integer.toString(data[4])
+                 + "\"round" + "             " + Integer.toString(data[2]);
       }
 
       public Node getNext() {
