@@ -13,7 +13,7 @@ public class DuctulatorView extends JFrame {
    private String[] straightDuctTypesList = {"Square", "Round", "Oval"};
    private String[] transitionDuctTypesList = {"Square to Square", "Square to Round", "Square to Oval"};
    private String[] elbowDuctTypesList = {"Rectangular", "Rect. w/ Vanes", "Radius"};
-   private String[] takoOffDuctTypesList = {"Side Take-off", "Top Take-off"};
+   private String[] takeOffDuctTypesList = {"Side Take-Off", "Top Take-Off"};
    private JComboBox straightDuctComboBox;
    private JComboBox transitionComboBox;
    private JComboBox elbowComboBox;
@@ -97,7 +97,7 @@ public class DuctulatorView extends JFrame {
       straightDuctComboBox = new JComboBox(straightDuctTypesList);
       transitionComboBox = new JComboBox(transitionDuctTypesList);
       elbowComboBox = new JComboBox(elbowDuctTypesList);
-      takeOffComboBox = new JComboBox(takoOffDuctTypesList);
+      takeOffComboBox = new JComboBox(takeOffDuctTypesList);
 
       add(straightDuctComboBox, "left, cell 2 0, growx");
       add(transitionComboBox, "left, cell 2 0, growx");

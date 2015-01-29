@@ -35,7 +35,6 @@ public class DuctulatorController {
 
          if(radioButtonSelection == "Straight Duct") {
             model.setSelectedDuctTypeComboBoxItem("Square");
-            //view.displayComboBox(radioButtonSelection);
             view.displayComboBoxInfo("Type 1");
             view.displayTextArea(model.getStraightDuctTotal());
          }
@@ -149,7 +148,7 @@ public class DuctulatorController {
             view.displayComboBoxInfo("Type 3");
             view.displayTextArea(model.getTransitionsTotal());
          }
-         else if (ductTypeSelection == "Side Take-off" || ductTypeSelection == "Top Take-off") {
+         else if (ductTypeSelection == "Side Take-Off" || ductTypeSelection == "Top Take-Off") {
             model.setSelectedDuctTypeComboBoxItem(ductTypeSelection);
             view.displayComboBoxInfo("Type 1");
             view.displayTextArea(model.getTakeOffsTotal());

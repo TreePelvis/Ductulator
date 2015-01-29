@@ -25,7 +25,8 @@ public class LinkedList {
       //Starting at the head node, move to the end of the list
       while (current.getNext() != null) {
          if(current.getNext().getFirstDuctSize() == ductSize &&
-                 current.getNext().getDuctMaterial() == ductMaterial) {
+                 current.getNext().getDuctMaterial() == ductMaterial &&
+                 current.getNext().getDuctFitting() == ductFitting) {
             current.getNext().addToTotal(total);
             return;
          }
@@ -46,7 +47,9 @@ public class LinkedList {
       //Starting at the head node, move to the end of the list
       while (current.getNext() != null) {
          if(current.getNext().getFirstDuctSize() == ductSize1 &&
-                 current.getNext().getSecondDuctSize() == ductSize2) {
+                 current.getNext().getSecondDuctSize() == ductSize2 &&
+                 current.getNext().getDuctMaterial() == ductMaterial &&
+                 current.getNext().getDuctFitting() == ductFitting) {
             current.getNext().addToTotal(total);
             return;
          }
@@ -128,15 +131,6 @@ public class LinkedList {
          current = current.getNext();
       }
       return output;
-
-        /* if(ductFitting == "Square" && current.getDuctFitting() == 1)
-            output += current.getTextualData() + "\n";
-         else if(ductFitting == "Round" && current.getDuctFitting() == 2)
-            output += current.getTextualData() + "\n";
-         else if(ductFitting == "Oval" && current.getDuctFitting() == 3)
-            output += current.getTextualData() + "\n";*/
-
-
    }
 
    private String getOutput(String ductFitting, Node current, String output) {
@@ -147,11 +141,11 @@ public class LinkedList {
       else if (ductFitting == "Oval" && current.getDuctFitting() == 3)
          output += current.getTextualData() + "\n";
       else if (ductFitting == "Square to Square" && current.getDuctFitting() == 4)
-         output += current.getTextualData() + "\n";
+         output += current.getTransitionTextualData() + "\n";
       else if (ductFitting == "Square to Round" && current.getDuctFitting() == 5)
-         output += current.getTextualData() + "\n";
+         output += current.getRoundTransitionTextualData() + "\n";
       else if (ductFitting == "Square to Oval" && current.getDuctFitting() == 6)
-         output += current.getTextualData() + "\n";
+         output += current.getTransitionTextualData() + "\n";
       else if (ductFitting == "Rectangular" && current.getDuctFitting() == 7)
          output += current.getTextualData() + "\n";
       else if (ductFitting == "Rect. w/ Vanes" && current.getDuctFitting() == 8)
@@ -166,22 +160,22 @@ public class LinkedList {
    }
 
    //Shows the data stored in each node. This data will be displayed in the JTextArea
-   public String transitionToString(String ductMaterial) {
+   public String transitionToString(String ductMaterial, String ductFitting) {
       Node current = head.getNext();
 
       String output = "";
 
       while (current != null) {
-         if(ductMaterial == "Galvanized" && current.getDuctMaterial() == 1 )
-            output += current.getTransitionTextualData() + "\n";
+         if(ductMaterial == "Galvanized" && current.getDuctMaterial() == 1)
+            output = getOutput(ductFitting, current, output);
          else if(ductMaterial == "Steel" && current.getDuctMaterial() == 2)
-            output += current.getTransitionTextualData() + "\n";
+            output = getOutput(ductFitting, current, output);
          else if(ductMaterial == "Aluminum" && current.getDuctMaterial() == 3)
-            output += current.getTransitionTextualData() + "\n";
+            output = getOutput(ductFitting, current, output);
          else if(ductMaterial == "Galvanneal" && current.getDuctMaterial() == 4)
-            output += current.getTransitionTextualData() + "\n";
+            output = getOutput(ductFitting, current, output);
          else if(ductMaterial == "Welded Grease" && current.getDuctMaterial() == 5)
-            output += current.getTransitionTextualData() + "\n";
+            output = getOutput(ductFitting, current, output);
 
          current = current.getNext();
       }
@@ -189,22 +183,22 @@ public class LinkedList {
    }
 
    //Shows the data stored in each node. This data will be displayed in the JTextArea
-   public String roundTransitionToString(String ductMaterial) {
+   public String roundTransitionToString(String ductMaterial, String ductFitting) {
       Node current = head.getNext();
 
       String output = "";
 
       while (current != null) {
-         if(ductMaterial == "Galvanized" && current.getDuctMaterial() == 1 )
-            output += current.getRoundTransitionTextualData() + "\n";
+         if(ductMaterial == "Galvanized" && current.getDuctMaterial() == 1)
+            output = getOutput(ductFitting, current, output);
          else if(ductMaterial == "Steel" && current.getDuctMaterial() == 2)
-            output += current.getRoundTransitionTextualData() + "\n";
+            output = getOutput(ductFitting, current, output);
          else if(ductMaterial == "Aluminum" && current.getDuctMaterial() == 3)
-            output += current.getRoundTransitionTextualData() + "\n";
+            output = getOutput(ductFitting, current, output);
          else if(ductMaterial == "Galvanneal" && current.getDuctMaterial() == 4)
-            output += current.getRoundTransitionTextualData() + "\n";
+            output = getOutput(ductFitting, current, output);
          else if(ductMaterial == "Welded Grease" && current.getDuctMaterial() == 5)
-            output += current.getRoundTransitionTextualData() + "\n";
+            output = getOutput(ductFitting, current, output);
 
          current = current.getNext();
       }
@@ -273,7 +267,7 @@ public class LinkedList {
       }
 
       public int getSecondDuctSize() {
-         return data[3];
+         return data[4];
       }
 
 

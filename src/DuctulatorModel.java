@@ -84,9 +84,9 @@ public class DuctulatorModel {
    public String getTransitionsTotal() {
       String text = "Duct Size                 Total\n";
       if(selectedDuctMaterialComboBoxItem == "Square to Round")
-         text += transitionsList.roundTransitionToString(selectedDuctMaterialComboBoxItem);
+         text += transitionsList.roundTransitionToString(selectedDuctMaterialComboBoxItem, selectedDuctTypeComboBoxItem);
       else
-         text += transitionsList.transitionToString(selectedDuctMaterialComboBoxItem);
+         text += transitionsList.transitionToString(selectedDuctMaterialComboBoxItem, selectedDuctTypeComboBoxItem);
       return text;
    }
    
